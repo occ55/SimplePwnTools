@@ -1,0 +1,20 @@
+{
+  "name": "simplepwntools",
+  "version": "0.0.1",
+  "description": "Simple collection of tools that help with CTF challanges. This is alpha version with bugs. Still in development",
+  "main": "index.js",
+  "scripts": {
+    "nodemon": "cd Dist && export NODE_PATH=. && nodemon Main.js",
+    "start": "cd Dist && export NODE_PATH=. && node Main.js"
+  },
+  "dependencies": {
+    "@types/node": "^10.9.4",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^2.8.3"
+  },
+  "keywords": [
+    "pwn"
+  ],
+  "author": "Onurcan Camci <onurcamci55@gmail.com>",
+  "license": "GNU GPLv3"
+}
