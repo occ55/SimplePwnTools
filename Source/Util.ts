@@ -1,5 +1,5 @@
 import { exec, execSync } from "child_process";
-import { Conv } from "Number/Conv";
+import { Conv } from "./Conv";
 
 export class Util {
   static Clipboard(val:string|Buffer|number) {
@@ -31,7 +31,7 @@ export class Util {
           const str = debruijn.join("").substr(0, len);
           Out = Buffer.concat([Out, Buffer.from(str, "binary")]);
         }
-        Out = Buffer.concat([Out, Conv.StringToBuffer(part, Endian)]);
+        Out = Buffer.concat([Out, Conv.ToBuffer(part, Endian)]);
       } else if(typeof part === "number") {
         let str = "";
         for(let k = 0; k < part; k++) {

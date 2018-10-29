@@ -2,7 +2,15 @@ export class Conv {
   static Hex2Int(val:string|number) {
     return parseInt(val as any);
   }
-  static StringToBuffer(Str:string, Endian:"LE"|"BE" = "LE") {
+  /**
+   * 
+   * @param Str 
+   * @param Endian 
+   */
+  static ToBuffer(Str:string|number, Endian:"LE"|"BE" = "LE") {
+    if(typeof Str === "number") {
+      Str = Str.toString();
+    }
     const Vals = Str.match(/\S+/g) || [];
     let AccBuf = Buffer.alloc(0);
     for(let v of Vals) {
@@ -25,12 +33,12 @@ export class Conv {
         (buf[`write${(vnum < 0 || vnum >= Math.pow(2,bit/2))?"U":""}Int${bit}${bit != 8?Endian:""}` as any] as any)(vnum);
         AccBuf = Buffer.concat([AccBuf, buf]);
       } else {
-        
+        AccBuf = Buffer.concat([AccBuf, Buffer.from(v, "binary")]);
       }
     }
     return AccBuf;
   }
-  static BufferToBinary(Buff:Buffer) {
+  static BufferToByteCode(Buff:Buffer) {
     return Buff.toString("binary");
   }
   static BufferToEscapedString(Buff:Buffer) {
@@ -41,7 +49,7 @@ export class Conv {
     } 
     return result;
   }
-  static BufferToInt(Buff:Buffer, Bit:32|16|8 = 8, Endian:"LE"|"BE" = "LE", Signed:boolean = false) {
+  static BufferToInts(Buff:Buffer, Bit:32|16|8 = 8, Endian:"LE"|"BE" = "LE", Signed:boolean = false) {
     let result = "";
     if(Buff.length % (Bit/8) != 0) {
       console.log("Buffer is not devidable");
@@ -52,7 +60,7 @@ export class Conv {
     }
     return result;
   }
-  static BufferToHex(Buff:Buffer, Byte:1|2|3|4|8 = 4, Endian:"LE"|"BE" = "LE") {
+  static BufferToHexes(Buff:Buffer, Byte:1|2|3|4|8 = 4, Endian:"LE"|"BE" = "LE") {
     let result = "";
     if(Buff.length % Byte != 0) {
       Buff = Buffer.concat([Buff, Buffer.alloc(Byte - (Buff.length % Byte),0)]);
