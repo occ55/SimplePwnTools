@@ -28,7 +28,7 @@ Example Code For Conv Module:
   console.log(Conv.BufferToHexes(Buff1, 2)); //0xbeef 0xdead 0xc0de 0xdead 0x0041
   console.log(Conv.BufferToHexes(Buff1, 4, "BE")); //0xefbeadde 0xdec0adde 0x41000000
   console.log(Conv.BufferToInts(Buff1)); //239 190 173 222 222 192 173 222 65
-  console.log(Conv.BufferToEscapedString(Buff1)); //239 190 173 222 222 192 173 222 65
+  console.log(Conv.BufferToEscapedString(Buff1)); //\xef\xbe\xad\xde\xde\xc0\xad\xde\x41
 
   //This is actually just Buff1.toString("binary")
   console.log(Conv.BufferToByteCode(Buff1)); //ï¾­ÞÞÀ­ÞA
