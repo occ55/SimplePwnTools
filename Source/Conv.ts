@@ -7,11 +7,10 @@ export class Conv {
    * @param Str 
    * @param Endian 
    */
-  static ToBuffer(Str:string|number, Endian:"LE"|"BE" = "LE") {
-    if(typeof Str === "number") {
-      Str = Str.toString();
-    }
-    const Vals = Str.match(/\S+/g) || [];
+  static ToBuffer(Endian:"LE"|"BE" = "LE", ...Strs:(string|number)[]) {
+    Strs = Strs.map(Str => typeof Str === "number"?Str.toString():Str)
+    const Vals:string[] = [];
+    Strs.forEach(Str => Vals.push(...(Str as any).match(/\S+/g)));
     let AccBuf = Buffer.alloc(0);
     for(let v of Vals) {
       if(v.substr(0,2) == "0x") {
@@ -37,6 +36,12 @@ export class Conv {
       }
     }
     return AccBuf;
+  }
+  static ToBufferLE(...Strs:(string|number)[]) {
+    return this.ToBuffer("LE", ...Strs);
+  }
+  static ToBufferBE(...Strs:(string|number)[]) {
+    return this.ToBuffer("BE", ...Strs);
   }
   static BufferToByteCode(Buff:Buffer) {
     return Buff.toString("binary");
