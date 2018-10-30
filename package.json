@@ -1,6 +1,6 @@
 {
   "name": "simplepwntools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple collection of tools that help with CTF challanges. This is alpha version with bugs. Still in development",
   "main": "Dist/Main.js",
   "scripts": {
