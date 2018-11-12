@@ -21,13 +21,14 @@ export class IO {
   Buffer:Buffer = Buffer.alloc(0);
   WaitLock:Promise<any>|null = null;
   WaitLockRes:Function|null = null;
+  ToTerminal:boolean = false;
   CP?:ChildProcess;
   Wait() {
     this.WaitLock = new Promise(res => this.WaitLockRes = res);
     return this.WaitLock;
   }
   Data(data:Buffer) {
-    if(this.CP) {
+    if(this.CP && this.ToTerminal) {
       process.stdout.write(data.toString("utf8"));
     }
     this.Buffer = Buffer.concat([this.Buffer, data]);
@@ -92,12 +93,13 @@ export class IO {
     }
   }
   
-  constructor(CP?:ChildProcess) {
+  constructor(CP?:ChildProcess, ToTerminal:boolean = false) {
     if(!CP) {
       process.stdin.on("data", this.Data.bind(this));
     } else {
       this.CP = CP;
       this.CP.stdout.on("data", this.Data.bind(this));
+      this.ToTerminal = ToTerminal;
     }
   }
 }
