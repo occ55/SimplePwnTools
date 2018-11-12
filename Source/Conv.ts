@@ -37,6 +37,23 @@ export class Conv {
     }
     return AccBuf;
   }
+  static HexToBuffer(Endian:"LE"|"BE" = "LE", ...Strs:string[]) {
+    const Vals:string[] = [];
+    Strs.forEach(Str => Vals.push(...(Str as any).match(/\S+/g)));
+    let AccBuf = Buffer.alloc(0);
+    for(let v of Vals) {
+      if(Endian == "LE") {
+        let tmp = "";
+        for(let k = v.length-2; k >= 0; k -= 2) {
+          tmp += v[k] + v[k+1];
+        }
+        v = tmp;
+      }
+      const buf = Buffer.from(v, "hex");
+      AccBuf = Buffer.concat([AccBuf, buf]);
+    }
+    return AccBuf;
+  }
   static ToBufferLE(...Strs:(string|number)[]) {
     return this.ToBuffer("LE", ...Strs);
   }
